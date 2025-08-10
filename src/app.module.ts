@@ -7,6 +7,7 @@ import { validationSchema } from './config/validationSchema';
 import authConfig from './config/authConfig'
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
+import { SearchPlaceModule } from './search-place/search-place.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AppController } from './app.controller';
       migrations: [__dirname + '/**/migrations/*.js'],
       migrationsTableName: 'migrations',
     }),
+    SearchPlaceModule,
   ],
   controllers: [AppController],
   providers: [],
