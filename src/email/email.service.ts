@@ -30,20 +30,20 @@ export class EmailService {
 
   async sendMemberJoinVerification(emailAddress: string, signupVerifyToken: string) {
     const baseUrl = this.config.baseUrl;
-
-    const url = `${baseUrl}/users/email-verify?signupVerifyToken=${signupVerifyToken}`;
+    const url = `${baseUrl}/user/email-verify?signupVerifyToken=${signupVerifyToken}`;
     console.log('email to: ', emailAddress);
     const mailOptions: EmailOptions = {
       to: emailAddress,
-      subject: '가입 인증 메일',
+      subject: 'BBOSONG 회원가입 이메일 인증',
       html: `
-        가입확인 버튼를 누르시면 가입 인증이 완료됩니다.<br/>
-        <form action="${url}" method="POST">
-          <button>가입확인</button>
-        </form>
+        <div style="max-width:400px;margin:40px auto;padding:32px 24px;background:#fff;border-radius:12px;box-shadow:0 2px 8px #eee;text-align:center;font-family:sans-serif;">
+          <h2 style="color:#4a90e2;">BBOSONG 회원가입 인증</h2>
+          <p style="font-size:16px;color:#333;">아래 버튼을 클릭하시면<br>이메일 인증이 완료됩니다.</p>
+          <a href="${url}" style="display:inline-block;margin:24px 0;padding:12px 32px;background:#4a90e2;color:#fff;text-decoration:none;border-radius:6px;font-size:18px;font-weight:bold;">이메일 인증하기</a>
+          <p style="font-size:12px;color:#888;">본인이 요청하지 않았다면 이 메일을 무시하세요.</p>
+        </div>
       `
     }
-
     return await this.transporter.sendMail(mailOptions);
   }
 }
