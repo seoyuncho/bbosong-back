@@ -8,6 +8,7 @@ import authConfig from './config/authConfig'
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { SearchPlaceModule } from './search-place/search-place.module';
+import { StoreModule } from './store/store.module';
 
 @Module({
   imports: [
@@ -26,12 +27,14 @@ import { SearchPlaceModule } from './search-place/search-place.module';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
+      charset: 'utf8mb4',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: process.env.DATABASE_SYNCHRONIZE === 'false',
       migrations: [__dirname + '/**/migrations/*.js'],
       migrationsTableName: 'migrations',
     }),
     SearchPlaceModule,
+    StoreModule,
   ],
   controllers: [AppController],
   providers: [],

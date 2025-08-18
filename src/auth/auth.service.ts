@@ -19,7 +19,7 @@ export class AuthService {
     const payload = { ...user };
 
     return jwt.sign(payload, this.config.jwtSecret, {
-      expiresIn: '1d',
+      expiresIn: '15m',
       audience: 'example.com',
       issuer: 'example.com',
     });
