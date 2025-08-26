@@ -6,7 +6,8 @@ import emailConfig from './config/emailConfig';
 import { validationSchema } from './config/validationSchema';
 import authConfig from './config/authConfig'
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { QrModule } from './qr/qr.module';
+// import { QrModule } from './qr/qr.module';
+import { QrScanModule } from './qr-scan/qr-scan.module';
 import { AppController } from './app.controller';
 
 
@@ -14,7 +15,7 @@ import { AppController } from './app.controller';
   imports: [
     UserModule,
     AuthModule,
-    QrModule,
+    QrScanModule,
     ConfigModule.forRoot({
       envFilePath: [`.env`],
       load: [emailConfig, authConfig],
