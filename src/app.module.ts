@@ -9,6 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // import { QrModule } from './qr/qr.module';
 import { QrScanModule } from './qr-scan/qr-scan.module';
 import { AppController } from './app.controller';
+import { SearchPlaceModule } from './search-place/search-place.module';
+import { StoreModule } from './store/store.module';
 
 
 @Module({
@@ -29,11 +31,14 @@ import { AppController } from './app.controller';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
+      charset: 'utf8mb4',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: process.env.DATABASE_SYNCHRONIZE === 'false',
       migrations: [__dirname + '/**/migrations/*.js'],
       migrationsTableName: 'migrations',
     }),
+    SearchPlaceModule,
+    StoreModule,
   ],
   controllers: [AppController],
   providers: [],
