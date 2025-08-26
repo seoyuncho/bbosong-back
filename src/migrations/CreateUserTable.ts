@@ -1,14 +1,26 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class CreateUserTable implements MigrationInterface {
-    name = 'CreateUserTable'
+  name = 'CreateUserTable';
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`CREATE TABLE \`User\` (\`id\` varchar(255) NOT NULL, \`name\` varchar(30) NOT NULL, \`email\` varchar(60) NOT NULL, \`password\` varchar(30) NOT NULL, \`gender\` enum('male', 'female', 'other') NOT NULL, \`birthdate\` date NOT NULL, \`usertype\` enum('customer', 'store_owner') NOT NULL, \`signupVerifyToken\` varchar(60) NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
-    }
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      CREATE TABLE \`user\` (
+        \`id\` INT NOT NULL AUTO_INCREMENT,
+        \`name\` VARCHAR(30) NOT NULL,
+        \`email\` VARCHAR(60) NOT NULL UNIQUE,
+        \`password\` VARCHAR(255) NOT NULL,
+        \`gender\` ENUM('male', 'female', 'other') NOT NULL,
+        \`birthdate\` DATE NOT NULL,
+        \`usertype\` ENUM('customer', 'store_owner') NOT NULL,
+        \`signupVerifyToken\` VARCHAR(100) NOT NULL,
+        \`isVerified\` BOOLEAN NOT NULL DEFAULT false,
+        PRIMARY KEY (\`id\`)
+      ) ENGINE=InnoDB
+    `);
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP TABLE \`User\``);
-    }
-
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`DROP TABLE \`user\``);
+  }
 }

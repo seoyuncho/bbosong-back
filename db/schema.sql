@@ -7,33 +7,33 @@ DROP TABLE IF EXISTS Station;
 DROP TABLE IF EXISTS UserLocation;
 DROP TABLE IF EXISTS User;
 
--- 1. User (회원)
-CREATE TABLE User (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  email VARCHAR(255) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL,
-  name VARCHAR(100) NOT NULL,
-  gender ENUM('M', 'F', 'Other') DEFAULT NULL,
-  phone VARCHAR(20) DEFAULT NULL,
-  birth_date DATE DEFAULT NULL,
-  address VARCHAR(255) DEFAULT NULL,
-  school_or_company VARCHAR(255) DEFAULT NULL,
-  major_or_job VARCHAR(255) DEFAULT NULL,
-  interests TEXT DEFAULT NULL,
-  hobbies TEXT DEFAULT NULL,
-  reward_points INT DEFAULT 0,
-  overdue_days INT DEFAULT 0,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+-- -- 1. User (회원)
+-- CREATE TABLE User (
+--   id INT AUTO_INCREMENT PRIMARY KEY,
+--   email VARCHAR(255) NOT NULL UNIQUE,
+--   password VARCHAR(255) NOT NULL,
+--   name VARCHAR(100) NOT NULL,
+--   gender ENUM('M', 'F', 'Other') DEFAULT NULL,
+--   phone VARCHAR(20) DEFAULT NULL,
+--   birth_date DATE DEFAULT NULL,
+--   address VARCHAR(255) DEFAULT NULL,
+--   school_or_company VARCHAR(255) DEFAULT NULL,
+--   major_or_job VARCHAR(255) DEFAULT NULL,
+--   interests TEXT DEFAULT NULL,
+--   hobbies TEXT DEFAULT NULL,
+--   reward_points INT DEFAULT 0,
+--   overdue_days INT DEFAULT 0,
+--   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- );
 
--- 2. 지도 (Map) - 사용자 위치 정보
-CREATE TABLE UserLocation (
-  uid INT PRIMARY KEY,
-  location POINT NOT NULL,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (uid) REFERENCES User(id)
-);
+-- -- 2. 지도 (Map) - 사용자 위치 정보
+-- CREATE TABLE UserLocation (
+--   uid INT PRIMARY KEY,
+--   location POINT NOT NULL,
+--   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--   FOREIGN KEY (uid) REFERENCES User(id)
+-- );
 
 -- 3. Station (우산 보관소)
 CREATE TABLE Station (
@@ -73,28 +73,28 @@ CREATE TABLE UmbrellaTraces (
   FOREIGN KEY (station_id) REFERENCES Station(id)
 );
 
--- 6. Sponsor (추천장소)
-CREATE TABLE Sponsor (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  brand_name VARCHAR(255) NOT NULL,
-  industry VARCHAR(100) DEFAULT NULL,
-  address VARCHAR(255) DEFAULT NULL,
-  keywords TEXT DEFAULT NULL,
-  advertising_fee DECIMAL(15,2) DEFAULT 0.00,
-  discount_coupon TEXT DEFAULT NULL,
-  description TEXT DEFAULT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+-- -- 6. Sponsor (추천장소)
+-- CREATE TABLE Sponsor (
+--   id INT AUTO_INCREMENT PRIMARY KEY,
+--   brand_name VARCHAR(255) NOT NULL,
+--   industry VARCHAR(100) DEFAULT NULL,
+--   address VARCHAR(255) DEFAULT NULL,
+--   keywords TEXT DEFAULT NULL,
+--   advertising_fee DECIMAL(15,2) DEFAULT 0.00,
+--   discount_coupon TEXT DEFAULT NULL,
+--   description TEXT DEFAULT NULL,
+--   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- );
 
--- 7. Coupon (쿠폰)
-CREATE TABLE Coupon (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  used BOOLEAN DEFAULT FALSE,
-  sponsor_id INT NOT NULL,
-  user_id INT DEFAULT NULL,  -- 쿠폰 소유자 (optional)
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  used_at TIMESTAMP NULL DEFAULT NULL,
-  FOREIGN KEY (sponsor_id) REFERENCES Sponsor(id),
-  FOREIGN KEY (user_id) REFERENCES User(id)
-);
+-- -- 7. Coupon (쿠폰)
+-- CREATE TABLE Coupon (
+--   id INT AUTO_INCREMENT PRIMARY KEY,
+--   used BOOLEAN DEFAULT FALSE,
+--   sponsor_id INT NOT NULL,
+--   user_id INT DEFAULT NULL,  -- 쿠폰 소유자 (optional)
+--   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--   used_at TIMESTAMP NULL DEFAULT NULL,
+--   FOREIGN KEY (sponsor_id) REFERENCES Sponsor(id),
+--   FOREIGN KEY (user_id) REFERENCES User(id)
+-- );

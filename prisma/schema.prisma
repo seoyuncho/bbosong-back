@@ -7,34 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model coupon {
-  id         Int       @id @default(autoincrement())
-  used       Boolean?  @default(false)
-  sponsor_id Int
-  user_id    Int?
-  created_at DateTime? @default(now()) @db.Timestamp(0)
-  used_at    DateTime? @db.Timestamp(0)
-  sponsor    sponsor   @relation(fields: [sponsor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "coupon_ibfk_1")
-  user       user?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "coupon_ibfk_2")
-
-  @@index([sponsor_id], map: "sponsor_id")
-  @@index([user_id], map: "user_id")
-}
-
-model sponsor {
-  id              Int       @id @default(autoincrement())
-  brand_name      String    @db.VarChar(255)
-  industry        String?   @db.VarChar(100)
-  address         String?   @db.VarChar(255)
-  keywords        String?   @db.Text
-  advertising_fee Decimal?  @default(0.00) @db.Decimal(15, 2)
-  discount_coupon String?   @db.Text
-  description     String?   @db.Text
-  created_at      DateTime? @default(now()) @db.Timestamp(0)
-  updated_at      DateTime? @default(now()) @db.Timestamp(0)
-  coupon          coupon[]
-}
-
 model station {
   id                                           Int              @id @default(autoincrement())
   name                                         String           @unique(map: "name") @db.VarChar(100)
@@ -79,36 +51,54 @@ model umbrellatraces {
   @@index([umbrella_id], map: "umbrella_id")
 }
 
-model user {
-  id                Int           @id @default(autoincrement())
-  email             String        @unique(map: "email") @db.VarChar(255)
-  password          String        @db.VarChar(255)
-  name              String        @db.VarChar(100)
-  gender            user_gender?
-  phone             String?       @db.VarChar(20)
-  birth_date        DateTime?     @db.Date
-  address           String?       @db.VarChar(255)
-  school_or_company String?       @db.VarChar(255)
-  major_or_job      String?       @db.VarChar(255)
-  interests         String?       @db.Text
-  hobbies           String?       @db.Text
-  reward_points     Int?          @default(0)
-  overdue_days      Int?          @default(0)
-  created_at        DateTime?     @default(now()) @db.Timestamp(0)
-  updated_at        DateTime?     @default(now()) @db.Timestamp(0)
-  coupon            coupon[]
-  userlocation      userlocation?
+
+model User {
+  id                Int      @id @default(autoincrement())
+  name              String   @db.VarChar(30)
+  email             String   @unique @db.VarChar(60)
+  password          String   @db.VarChar(255)
+  gender            Gender
+  birthdate         DateTime @db.Date
+  usertype          UserType
+  signupVerifyToken String   @db.VarChar(100)
+  isVerified        Boolean  @default(false)
 }
 
-model userlocation {
-  uid        Int                  @id
-  location   Unsupported("point")
-  updated_at DateTime?            @default(now()) @db.Timestamp(0)
-  user       user                 @relation(fields: [uid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userlocation_ibfk_1")
+enum Gender {
+  male
+  female
+  other
 }
 
-enum user_gender {
-  M
-  F
-  Other
+enum UserType {
+  customer
+  store_owner
 }
+
+model Store {
+  id          Int          @id @default(autoincrement())
+  name        String       @db.VarChar(255)
+  latitude    Float
+  longitude   Float
+  description String?      @db.Text
+  address     String?      @db.VarChar(255)
+  category    String       @db.VarChar(50)
+  image_url   String?      @db.VarChar(255)
+  hashtags    StoreHashtag[]
+}
+
+model Hashtag {
+  id       Int            @id @default(autoincrement())
+  tag_name String         @unique @db.VarChar(50)
+  stores   StoreHashtag[]
+}
+
+model StoreHashtag {
+  storeId   Int
+  hashtagId Int
+  store     Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  hashtag   Hashtag @relation(fields: [hashtagId], references: [id], onDelete: Cascade)
+
+  @@id([storeId, hashtagId])
+}
+
