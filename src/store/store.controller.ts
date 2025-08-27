@@ -18,29 +18,6 @@ import { diskStorage } from 'multer';
 export class StoreController {
   constructor(private readonly storeService: StoreService) {}
 
-  @Post()
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: './uploads',
-        filename: (req, file, cb) => {
-          cb(null, `${Date.now()}-${file.originalname}`);
-        },
-      }),
-    }),
-  )
-  async create(
-    @Body() createStoreDto: CreateStoreDto,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    if (!file) {
-      // 파일이 없을 경우 예외 처리
-      throw new NotFoundException('Image file not found.');
-    }
-    const imageUrl = `/uploads/${file.filename}`;
-    return this.storeService.create(createStoreDto, imageUrl);
-  }
-
   @Get('initialmap')
   async getStores() {
     console.log('Fetching all stores for initial map...');
