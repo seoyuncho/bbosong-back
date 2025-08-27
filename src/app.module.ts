@@ -10,6 +10,7 @@ import { AppController } from './app.controller';
 import { SearchPlaceModule } from './search-place/search-place.module';
 import { StoreModule } from './store/store.module';
 import { PrismaService } from './prisma.service';
+import { UserQRModule } from './user_qr/user-qr.module';
 
 
 @Module({
@@ -25,6 +26,7 @@ import { PrismaService } from './prisma.service';
     }),
     SearchPlaceModule,
     StoreModule,
+    UserQRModule
   ],
   controllers: [AppController],
   providers: [PrismaService],

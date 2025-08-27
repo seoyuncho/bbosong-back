@@ -10,6 +10,8 @@ datasource db {
 model station {
   id                                           Int              @id @default(autoincrement())
   name                                         String           @unique(map: "name") @db.VarChar(100)
+  latitude                                     Float
+  longitude                                    Float
   address                                      String           @db.VarChar(255)
   initial_umbrella_count                       Int?             @default(0)
   current_umbrella_count                       Int?             @default(0)
@@ -35,9 +37,12 @@ model umbrella {
   station_umbrella_station_return_idTostation station?         @relation("umbrella_station_return_idTostation", fields: [station_return_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "umbrella_ibfk_2")
   umbrellatraces                              umbrellatraces[]
 
+  users User[] @relation 
+
   @@index([station_borrow_id], map: "station_borrow_id")
   @@index([station_return_id], map: "station_return_id")
 }
+
 
 model umbrellatraces {
   id          Int       @id @default(autoincrement())
@@ -62,6 +67,11 @@ model User {
   usertype          UserType
   signupVerifyToken String   @db.VarChar(100)
   isVerified        Boolean  @default(false)
+  bubbleCount       Int      @default(0)        // 비눗방울(보유 방울 개수)
+  travelDistance    Float    @default(0)        // 이동 거리
+  rentCount         Int      @default(0)        // 대여 횟수
+  umbrellaId        Int?                             // 우산 아이디
+  umbrella          umbrella? @relation(fields: [umbrellaId], references: [id])
 }
 
 enum Gender {
@@ -85,6 +95,7 @@ model Store {
   category    String       @db.VarChar(50)
   image_url   String?      @db.VarChar(255)
   hashtags    StoreHashtag[]
+  bubbleCount Int          @default(0) 
 }
 
 model Hashtag {

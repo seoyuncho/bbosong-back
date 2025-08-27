@@ -50,7 +50,7 @@ CREATE TABLE Station (
 -- 4. Umbrella (우산)
 CREATE TABLE Umbrella (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  qr_info VARCHAR(255) UNIQUE NOT NULL,
+  -- qr_info VARCHAR(255) UNIQUE NOT NULL,
   station_borrow_id INT DEFAULT NULL,  -- 대여 시작 스테이션
   station_return_id INT DEFAULT NULL,  -- 반납된 스테이션
   rent_start DATETIME DEFAULT NULL,

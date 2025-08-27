@@ -3,6 +3,25 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  // 유저 생성
+   const user = await prisma.user.create({
+    data: {
+      name: '정뽀송',
+      email: '1234@example.com',
+      password: '12345678', // 해시 비밀번호 권장
+      gender: 'male',            // male, female, other 중 선택
+      birthdate: new Date('2000-01-01'),
+      usertype: 'customer',
+      signupVerifyToken: 'token123',
+      isVerified: true,
+      bubbleCount: 0,
+      travelDistance: 0,
+      rentCount: 0,
+    },
+  });
+
+  console.log('User created:', user);
+
   // Hashtags 미리 생성
   await prisma.hashtag.createMany({
     data: [
