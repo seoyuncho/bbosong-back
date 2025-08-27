@@ -21,6 +21,7 @@ import { WeatherModule } from './weather/weather.module';
     QrScanModule,
     ConfigModule.forRoot({
       envFilePath: [`.env`],
+      ignoreEnvFile: process.env.NODE_ENV === 'production',
       load: [emailConfig, authConfig],
       isGlobal: true,
       validationSchema,
