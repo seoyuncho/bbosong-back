@@ -11,10 +11,12 @@ export class WeatherService {
   async getCurrentWeather(lat: number, lon: number) {
     const url = `${this.BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${this.API_KEY}&units=metric&lang=kr`;
     const { data } = await this.httpService.axiosRef.get(url);
+    console.log(data);
     return {
       temperature: data.main.temp,
-      weather: data.weather[0].description,
+      weather: data.weather[0].main,
       icon: data.weather[0].icon,
+      id: data.weather[0].id,
       city: data.name,
     };
   }
