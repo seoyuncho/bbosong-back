@@ -12,6 +12,7 @@ import { StoreModule } from './store/store.module';
 import { PrismaService } from './prisma.service';
 import { UserQRModule } from './user_qr/user-qr.module';
 import { WeatherModule } from './weather/weather.module';
+import Joi from 'joi';
 
 
 @Module({
@@ -20,11 +21,17 @@ import { WeatherModule } from './weather/weather.module';
     AuthModule,
     QrScanModule,
     ConfigModule.forRoot({
-      envFilePath: [`.env`],
-      ignoreEnvFile: process.env.NODE_ENV === 'production',
+      // envFilePath: [`.env`],
+      envFilePath: process.env.NODE_ENV === 'production' ? [] : ['.env'], 
       load: [emailConfig, authConfig],
       isGlobal: true,
-      validationSchema,
+      validationSchema: Joi.object({
+        EMAIL_SERVICE: Joi.string().required(),
+        EMAIL_USER: Joi.string().required(),
+        EMAIL_PASSWORD: Joi.string().required(),
+        EMAIL_BASE_URL: Joi.string().required(),
+        DATABASE_URL: Joi.string().required(),
+      }),
     }),
     SearchPlaceModule,
     StoreModule,
