@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { StoreService, StoreMarkerDto } from './store.service';
 import { CreateStoreDto } from './dto/create-store.dto';
-import { Store } from './entity/store.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 

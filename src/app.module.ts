@@ -5,12 +5,11 @@ import { ConfigModule } from '@nestjs/config';
 import emailConfig from './config/emailConfig';
 import { validationSchema } from './config/validationSchema';
 import authConfig from './config/authConfig'
-import { TypeOrmModule } from '@nestjs/typeorm';
-// import { QrModule } from './qr/qr.module';
 import { QrScanModule } from './qr-scan/qr-scan.module';
 import { AppController } from './app.controller';
 import { SearchPlaceModule } from './search-place/search-place.module';
 import { StoreModule } from './store/store.module';
+import { PrismaService } from './prisma.service';
 
 
 @Module({
@@ -24,24 +23,11 @@ import { StoreModule } from './store/store.module';
       isGlobal: true,
       validationSchema,
     }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DATABASE_HOST,
-      port: 3306,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      charset: 'utf8mb4',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: process.env.DATABASE_SYNCHRONIZE === 'false',
-      migrations: [__dirname + '/**/migrations/*.js'],
-      migrationsTableName: 'migrations',
-    }),
     SearchPlaceModule,
     StoreModule,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [PrismaService],
 })
 
 export class AppModule {}

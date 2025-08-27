@@ -50,7 +50,7 @@ export class UserController {
     @Get(':id')
     async getUserInfo(@Param('id') userId: string): Promise<UserInfoDto> {
         console.log('Fetching user info for ID:', userId);
-        return await this.userService.getUserInfo(userId);
+        return await this.userService.getUserInfo(Number(userId));
     }
     // Logic to fetch user information by ID
 }
