@@ -31,6 +31,7 @@ export class UserQRService {
         umbrellaId: true,
         travelDistance: true,
         rentCount: true,
+        bubbleCount: true,
       },
     });
     if (!user) {
@@ -164,6 +165,31 @@ export class UserQRService {
       return { message: 'Return processed successfully', distance };
     });
   }
+
+  // -----------------------------
+  // 스토어 버블 획득
+  // -----------------------------
+  async redeemStoreBubble(userId: number, storeName: string) {
+    // 1. 스토어 찾기
+    const store = await this.prisma.store.findFirst({
+      where: { name: storeName },
+    });
+    if (!store) throw new Error('Store not found');
+
+    // 2. 유저 업데이트 (버블 카운트 증가)
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        bubbleCount: { increment: store.bubbleCount },
+      },
+    });
+
+    // 3. 프론트에 스토어 정보 반환
+    return store;
+  }
+
+ 
+
   // -----------------------------
   // 유저 대여 우산 정보 조회
   // -----------------------------

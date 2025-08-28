@@ -12,6 +12,7 @@ import { StoreModule } from './store/store.module';
 import { PrismaService } from './prisma.service';
 import { UserQRModule } from './user_qr/user-qr.module';
 import { WeatherModule } from './weather/weather.module';
+import { MypageModule } from './mypage/mypage.module';
 import Joi from 'joi';
 
 
@@ -37,6 +38,7 @@ import Joi from 'joi';
     StoreModule,
     UserQRModule,
     WeatherModule,
+    MypageModule,
   ],
   controllers: [AppController],
   providers: [PrismaService],

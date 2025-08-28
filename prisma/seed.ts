@@ -162,6 +162,7 @@ async function main() {
         description: null,
         address: '서울특별시 중구 남대문로1길 57-1',
         category: 'recommendation',
+        bubbleCount: 3,
         image_url: null,
       },
       {

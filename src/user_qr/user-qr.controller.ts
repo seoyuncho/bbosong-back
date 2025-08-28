@@ -30,6 +30,17 @@ export class UserQRController {
     return result;
   }
 
+  // -----------------------------
+  // 리워드 API
+  // -----------------------------  
+  @Post('redeem-bubble')
+  async redeemBubble(
+    @Body('userId') userId: number,
+    @Body('storeName') storeName: string,
+  ) {
+    return this.userQRService.redeemStoreBubble(userId, storeName);
+  }
+
   // 유저 대여 우산 조회
   @Get('my-umbrella')
   async getUserUmbrella(@Query('userId') userId: string) {
