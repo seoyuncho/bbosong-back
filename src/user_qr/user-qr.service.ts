@@ -1,5 +1,5 @@
 import { PrismaService } from "src/prisma.service";
-import { Injectable } from '@nestjs/common';
+import { Injectable,NotFoundException } from '@nestjs/common';
 
 // 두 좌표(lat/lon) 간 거리 계산 (km 단위)
 function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number) {
@@ -208,5 +208,29 @@ export class UserQRService {
 
     return { umbrella };
   }
+
+  async getStationNameById(stationId: number): Promise<string> {
+    const station = await this.prisma.station.findUnique({
+      where: { id: stationId },
+    });
+
+    if (!station) {
+      throw new NotFoundException("해당 스테이션을 찾을 수 없습니다.");
+    }
+
+    return station.name;
+  }
+  async getStationAddById(stationId: number): Promise<string> {
+    const station = await this.prisma.station.findUnique({
+      where: { id: stationId },
+    });
+
+    if (!station) {
+      throw new NotFoundException("해당 스테이션을 찾을 수 없습니다.");
+    }
+
+    return station.address;
+  }
+
 
 }

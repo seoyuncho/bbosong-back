@@ -50,5 +50,15 @@ export class UserQRController {
     const result = await this.userQRService.getUserUmbrella(id);
     return result; // { umbrella: { ... } } 혹은 { umbrella: null }
   }
+
+  @Get("station-name")
+  async getStationName(@Query("stationId") stationId: string) {
+    const id = Number(stationId);
+    return {
+      stationId: id,
+      stationName: await this.userQRService.getStationNameById(id),
+      stationAddress: await this.userQRService.getStationAddById(id),
+    };
+  }
 }
 
