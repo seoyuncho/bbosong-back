@@ -42,7 +42,7 @@ dotenv.config({
       ? '.production.env'
       : process.env.NODE_ENV === 'stage'
         ? 'stage.env'
-        : '.development.env'
+        : '.development.env',
   ),
 });
 
@@ -61,9 +61,8 @@ async function bootstrap() {
 
   // 레일웨이에서 제공하는 포트와 호스트로 서버 시작
   const port = process.env.PORT || 3000;
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
 
   console.log(`Application is running on port ${port}`);
 }
 bootstrap();
-
