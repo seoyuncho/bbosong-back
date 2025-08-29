@@ -15,6 +15,7 @@ export class WeatherService {
     return {
       temperature: data.main.temp,
       weather: data.weather[0].main,
+      description: data.weather[0].description,
       icon: data.weather[0].icon,
       id: data.weather[0].id,
       city: data.name,
