@@ -53,7 +53,7 @@ model umbrellatraces {
 
   umbrella    umbrella  @relation(fields: [umbrella_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "umbrellatraces_ibfk_1")
   station     station   @relation(fields: [station_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "umbrellatraces_ibfk_2")
-  user        user      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user        User      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   @@index([station_id], map: "station_id")
   @@index([umbrella_id], map: "umbrella_id")
   @@index([user_id], map: "user_id")
