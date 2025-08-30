@@ -1,4 +1,5 @@
 import { PrismaService } from "src/prisma.service";
+import { Prisma } from "@prisma/client";
 import { Injectable,NotFoundException } from '@nestjs/common';
 import logger from '../logger/logger';
 
@@ -151,11 +152,14 @@ export class UserQRService {
       // umbrellaTraces 추가
       await prisma.umbrellatraces.create({
         data: {
-          umbrella_id: user.umbrellaId,
+          umbrella_id: user.umbrellaId, // number
           station_id: returnStation.id,
+          user_id: user.id,
           trace_time: new Date(),
-        },
+        } as Prisma.umbrellatracesUncheckedCreateInput,
       });
+
+
 
        // station 우산 개수 증가
       await prisma.station.update({
