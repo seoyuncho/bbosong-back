@@ -4,15 +4,12 @@ import {
   Body,
   Get,
   Param,
-  Query, 
+  Query,
   NotFoundException,
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
 import { StoreService, StoreMarkerDto } from './store.service';
-import { CreateStoreDto } from './dto/create-store.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
 
 @Controller('store')
 export class StoreController {
@@ -24,14 +21,25 @@ export class StoreController {
     return this.storeService.findAll();
   }
 
-  @Get(':id')
-  async getStore(@Param('id') id: number) {
-    console.log(`Fetching store with ID: ${id}`);
-    return this.storeService.findOne(id);
+  @Post('search')
+  async searchStoreByName(
+    @Body('name') name: string,
+  ): Promise<StoreMarkerDto[]> {
+    if (!name) throw new NotFoundException('검색어가 필요합니다.');
+    console.log(`Searching for stores with name: ${name}`);
+    return this.storeService.findByName(name);
   }
 
+  // @Get(':id')
+  // async getStore(@Param('id') id: number) {
+  //   console.log(`Fetching store with ID: ${id}`);
+  //   return this.storeService.findOne(id);
+  // }
+
   @Get('hashtag/:tagName')
-  async findByHashtag(@Param('tagName') tagName: string): Promise<StoreMarkerDto[]> {
+  async findByHashtag(
+    @Param('tagName') tagName: string,
+  ): Promise<StoreMarkerDto[]> {
     console.log(`Searching for stores with hashtag: #${tagName}`);
     const stores = await this.storeService.findByHashtag(tagName);
     return stores;

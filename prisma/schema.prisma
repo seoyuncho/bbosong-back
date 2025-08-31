@@ -43,18 +43,22 @@ model umbrella {
   @@index([station_return_id], map: "station_return_id")
 }
 
-
 model umbrellatraces {
   id          Int       @id @default(autoincrement())
   umbrella_id Int
   station_id  Int
+  user_id     Int
   trace_time  DateTime? @default(now()) @db.Timestamp(0)
+
   umbrella    umbrella  @relation(fields: [umbrella_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "umbrellatraces_ibfk_1")
   station     station   @relation(fields: [station_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "umbrellatraces_ibfk_2")
+  user        User      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([station_id], map: "station_id")
   @@index([umbrella_id], map: "umbrella_id")
+  @@index([user_id], map: "user_id")
 }
+
 
 
 model User {
@@ -72,6 +76,7 @@ model User {
   rentCount         Int      @default(0)        // 대여 횟수
   umbrellaId        Int?                             // 우산 아이디
   umbrella          umbrella? @relation(fields: [umbrellaId], references: [id])
+  umbrellatraces    umbrellatraces[]
 }
 
 enum Gender {

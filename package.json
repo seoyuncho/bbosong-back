@@ -43,9 +43,11 @@
     "qrcode": "^1.5.4",
     "qrcode-reader": "^1.0.4",
     "reflect-metadata": "^0.2.0",
+    "resend": "^6.0.2",
     "rxjs": "^7.8.1",
     "ulid": "^3.0.1",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

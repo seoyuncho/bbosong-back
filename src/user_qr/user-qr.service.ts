@@ -1,5 +1,7 @@
 import { PrismaService } from "src/prisma.service";
+import { Prisma } from "@prisma/client";
 import { Injectable,NotFoundException } from '@nestjs/common';
+import logger from '../logger/logger';
 
 // 두 좌표(lat/lon) 간 거리 계산 (km 단위)
 function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number) {
@@ -89,6 +91,8 @@ export class UserQRService {
         },
       });
 
+      logger.info(`[RFID] 우산 ${user.umbrellaId} 대여 처리!`);
+      logger.info(`[QR] 우산 대여 완료!`);
       return { user: updatedUser, umbrella };
     });
   }
@@ -148,11 +152,14 @@ export class UserQRService {
       // umbrellaTraces 추가
       await prisma.umbrellatraces.create({
         data: {
-          umbrella_id: user.umbrellaId,
+          umbrella_id: user.umbrellaId, // number
           station_id: returnStation.id,
+          user_id: user.id,
           trace_time: new Date(),
-        },
+        } as Prisma.umbrellatracesUncheckedCreateInput,
       });
+
+
 
        // station 우산 개수 증가
       await prisma.station.update({
@@ -161,7 +168,8 @@ export class UserQRService {
           current_umbrella_count: { increment: 1 },
         },
       });
-
+      logger.info(`[RFID] 우산 ${user.umbrellaId} 반납 처리!`);
+      logger.info(`[QR] 우산 반납 완료!`);
       return { message: 'Return processed successfully', distance };
     });
   }
