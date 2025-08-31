@@ -48,7 +48,6 @@ dotenv.config({
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
   // ValidationPipe 전역 적용
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
