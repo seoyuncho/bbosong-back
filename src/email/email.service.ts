@@ -69,7 +69,7 @@ export class EmailService {
     try {
       const result = await this.resend.emails.send({
         from: 'onboarding@resend.dev', // Resend에서 승인된 이메일
-        to: 'bbosong.manager@gmail.com',
+        to: emailAddress,
         subject: 'BBOSONG 회원가입 이메일 인증',
         html: `
           <div style="max-width:400px;margin:40px auto;padding:32px 24px;background:#fff;border-radius:12px;box-shadow:0 2px 8px #eee;text-align:center;font-family:sans-serif;">

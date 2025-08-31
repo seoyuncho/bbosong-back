@@ -90,9 +90,9 @@ export class UserQRService {
           current_umbrella_count: { decrement: 1 },
         },
       });
-
-      logger.info(`[RFID] 우산 ${user.umbrellaId} 대여 처리!`);
-      logger.info(`[QR] 우산 대여 완료!`);
+      
+      logger.info(`[QR] 우산 대여 시작!`);
+      logger.info(`[RFID] ${station.name}에서 우산 대여 완료!`);
       return { user: updatedUser, umbrella };
     });
   }
@@ -168,8 +168,9 @@ export class UserQRService {
           current_umbrella_count: { increment: 1 },
         },
       });
-      logger.info(`[RFID] 우산 ${user.umbrellaId} 반납 처리!`);
-      logger.info(`[QR] 우산 반납 완료!`);
+
+      logger.info(`[QR] 우산 반납 시작!`);
+      logger.info(`[RFID] ${returnStation.name}에서 우산 반납 완료!`);
       return { message: 'Return processed successfully', distance };
     });
   }
