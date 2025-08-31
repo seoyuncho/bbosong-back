@@ -58,6 +58,7 @@ export class UserQRController {
       stationId: id,
       stationName: await this.userQRService.getStationNameById(id),
       stationAddress: await this.userQRService.getStationAddById(id),
+      stationCurrentUmbrellaCount: await this.userQRService.getStationCurrentUmbrellaCountById(id),
     };
   }
 }

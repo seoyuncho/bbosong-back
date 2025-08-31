@@ -231,6 +231,15 @@ export class UserQRService {
 
     return station.address;
   }
+  async getStationCurrentUmbrellaCountById(stationId: number): Promise<number> {
+    const station = await this.prisma.station.findUnique({
+      where: { id: stationId },
+    });
 
+    if (!station) {
+      throw new NotFoundException("해당 스테이션을 찾을 수 없습니다.");
+    }
+    return station.current_umbrella_count;
+  }
 
 }
